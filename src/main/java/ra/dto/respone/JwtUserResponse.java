@@ -12,13 +12,17 @@ import java.util.Collection;
 @AllArgsConstructor
 @Data
 public class JwtUserResponse {
+    private String username;
     private String phoneNumber ;
+    private String fullName ;
     private String token;
     private String type ="Bearer";
     private Collection<? extends GrantedAuthority> listRoles;
 
-    public JwtUserResponse(String phoneNumber, String token, Collection<? extends GrantedAuthority> listRoles) {
+    public JwtUserResponse(String ussername, String phoneNumber,String fullName, String token, Collection<? extends GrantedAuthority> listRoles) {
+        this.username = ussername;
         this.phoneNumber = phoneNumber;
+        this.fullName = fullName;
         this.token = token;
         this.listRoles = listRoles;
     }

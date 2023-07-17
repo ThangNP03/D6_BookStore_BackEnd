@@ -28,4 +28,5 @@ public class Books {
     private Long likes ;
     private Long disLike ;
     private Long quantity;
+    private String image;
 }

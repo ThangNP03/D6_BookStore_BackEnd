@@ -21,7 +21,6 @@ public class BookController {
         List<Books> listBooks = bookService.findAll();
         return listBooks;
     }
-
     @PostMapping("/create")
     public ResponseEntity<?> create (@RequestBody  BookRespone bookRespone){
                 Books books = Books.builder()
@@ -34,6 +33,7 @@ public class BookController {
                 .numberOfPage(bookRespone.getNumberOfPage())
                 .translator(bookRespone.getTranslator())
                 .quantity(bookRespone.getQuantity())
+                        .image(bookRespone.getImage())
                 .build();
         bookService.save(books);
         return ResponseEntity.ok(new ResponseMessage("Thêm mới thành công !!"));
@@ -52,6 +52,7 @@ public class BookController {
                 .numberOfPage(bookRespone.getNumberOfPage())
                 .translator(bookRespone.getTranslator())
                 .quantity(bookRespone.getQuantity())
+                .image(bookRespone.getImage())
                 .build();
         bookService.save(books);
         return ResponseEntity.ok(new ResponseMessage("Chỉnh sửa thông sách thành công  !!"));

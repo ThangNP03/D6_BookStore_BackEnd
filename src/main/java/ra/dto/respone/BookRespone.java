@@ -19,4 +19,5 @@ public class BookRespone {
     private Long numberOfPage;
     private String translator;
     private Long quantity;
+    private String image;
 }

@@ -46,4 +46,5 @@ public class Users {
         this.fullName = fullName;
         this.roles = roles;
     }
+
 }
