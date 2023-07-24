@@ -1,9 +1,7 @@
 package ra.model.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -15,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @Table(name = "users")
 public class Users {
     @Id
@@ -25,6 +24,7 @@ public class Users {
     private String username;
     @Column(name = "phoneNumber")
     private String phoneNumber;
+    @JsonIgnore
     @Column(name = "password")
     @Size(min = 6)
     private String passWord;
@@ -32,6 +32,10 @@ public class Users {
     private String fullName ;
     @Column(name = "status", columnDefinition = "boolean default true")
     private boolean status;
+    @Column(name = "avatar")
+    private String avatar;
+    @Column(name = "address")
+    private String address;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ROLE",

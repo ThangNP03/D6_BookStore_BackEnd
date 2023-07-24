@@ -1,6 +1,8 @@
 package ra.service.IMPL;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ra.model.Books;
 import ra.model.user.Roles;
@@ -8,6 +10,8 @@ import ra.repository.IBookRepository;
 import ra.service.IBookService;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class BookService implements IBookService {
     @Autowired
@@ -27,6 +31,11 @@ public class BookService implements IBookService {
     }
 
     @Override
+    public Optional<Books> getBooksById(Long id) {
+        return bookRepository.getBooksById(id);
+    }
+
+    @Override
     public void save(Books books) {
         bookRepository.save(books);
     }
@@ -39,4 +48,9 @@ public class BookService implements IBookService {
     public Books findById(Long id) {
         return bookRepository.findById(id).get();
     }
+
+//    @Override
+//    public Page<Books> findAllBook(Pageable pageable) {
+//        return bookRepository.findAllBook(pageable);
+//    }
 }

@@ -21,6 +21,7 @@ import ra.service.IMPL.RoleService;
 import ra.service.IMPL.UserService;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,16 @@ public class AuthorController {
     public List<Users> getAll(){
         List<Users> getAll = (List<Users>) userService.findAll();
         return getAll;
+    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateUser(@RequestBody UserResponse userResponse, @PathVariable Long id){
+        Users users = userService.findById(id);
+        users.setFullName(userResponse.getFullName());
+        users.setPhoneNumber(userResponse.getPhoneNumber());
+        users.setAvatar(userResponse.getAvatar());
+        users.setAddress(userResponse.getAddress());
+        userService.save(users);
+        return ResponseEntity.ok("Chỉnh sửa thông tin thành công!!!");
     }
     @PostMapping("/signIn")
     public ResponseEntity<?> login(@RequestBody FormLogin formLogin) {
@@ -82,6 +93,7 @@ public class AuthorController {
                 switch (role){
                     case "admin":
                         listRoles.add(roleService.findByRoleName(RoleName.ADMIN));
+                        break;
                     case "pm":
                         listRoles.add(roleService.findByRoleName(RoleName.PM));
                     case "user":

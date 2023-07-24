@@ -1,6 +1,9 @@
 package ra.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ra.dto.respone.BookRespone;
@@ -8,7 +11,9 @@ import ra.dto.respone.ResponseMessage;
 import ra.model.Books;
 import ra.service.IBookService;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -20,6 +25,23 @@ public class BookController {
     public List<Books> findAll(){
         List<Books> listBooks = bookService.findAll();
         return listBooks;
+    }
+
+//    @GetMapping("/page")
+//    public ResponseEntity<Page<Books>> findAllBook(Pageable pageable) {
+//        Page<Books> listBooks = bookService.findAllBook(pageable);
+//        return new ResponseEntity<>(listBooks, HttpStatus.OK);
+//    }
+
+    @GetMapping("/detallBook/{id}")
+    public ResponseEntity<?> detallBookById(@PathVariable Long id){
+        Optional<Books> detalls = bookService.getBooksById(id);
+        if (!detalls.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT );
+        }else {
+
+            return new ResponseEntity<>(detalls, HttpStatus.OK);
+        }
     }
     @PostMapping("/create")
     public ResponseEntity<?> create (@RequestBody  BookRespone bookRespone){
@@ -70,7 +92,10 @@ public class BookController {
     }
     @GetMapping("/searchByBookName/{bookName}")
     public List<Books> searchByBookName(@PathVariable String bookName ){
+        if (bookName == ""){
+            return    bookService.findAll();
+        }else {
         return  bookService.findBooksByBookNameContains(bookName );
-    }
+    }}
 
 }
