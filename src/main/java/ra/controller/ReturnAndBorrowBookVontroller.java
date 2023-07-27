@@ -1,5 +1,6 @@
 package ra.controller;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ import java.util.*;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/bookStore/cart")
-public class CartController {
+public class ReturnAndBorrowBookVontroller {
      @Autowired
     private IUserService userService;
      @Autowired
@@ -42,10 +43,10 @@ public class CartController {
          return new ResponseEntity<>(booking, HttpStatus.OK);
      }
     @PostMapping("/addBook")
+
     public ResponseEntity<?> create(@RequestBody ReturnAndBorrowBooksResponse returnAndBorrowBooksResponse ) {
         Users users = customUserDetailsService.getCurrentUser();
         Books books = bookService.findById(returnAndBorrowBooksResponse.getBookId());
-
         ReturnAndBorrowBooks returnAndBorrow = ReturnAndBorrowBooks.builder()
                 .bookId(books)
                 .userId(users)
@@ -54,24 +55,39 @@ public class CartController {
                 .status("")
                 .reason("")
                 .build();
+        if (books.getId() != null){
+            returnAndBorrow.setQuantity(returnAndBorrow.getQuantity() + 1);
             returnAndBorrowBookService.save(returnAndBorrow);
-        // Nếu không thuộc các trạng thái trên, trả về HttpStatus.CREATED
+        }
+        returnAndBorrowBookService.save(returnAndBorrow);
         return new ResponseEntity<>(new ResponseMessage("test"), HttpStatus.OK);
+    }
+
+    @GetMapping("/findUserID/{id}")
+    public ResponseEntity<?> findListCartByUserID (@PathVariable Long id){
+         List<ReturnAndBorrowBooks> listCart = returnAndBorrowBookService.findByUserId_UserId(id);
+         return new ResponseEntity<>(listCart, HttpStatus.OK) ;
     }
     @PostMapping("/orderBook")
     public ResponseEntity<?> orderBook(@RequestBody ReturnAndBorrowBooksResponse returnAndBorrowBooksResponse) {
         Users users = customUserDetailsService.getCurrentUser();
         Books books = bookService.findById(returnAndBorrowBooksResponse.getBookId());
+        ReturnAndBorrowBooks id = returnAndBorrowBookService.findById(returnAndBorrowBooksResponse.getBookId());
+        if (id.getBookId() != null ){
+            ReturnAndBorrowBooks returnAndBorrow = ReturnAndBorrowBooks.builder()
+                    .returnAt(new Date())
+                    .borrowAt(new Date())
+                    .reason("")
+                    .status("LOADING")
+                    .userId(users)
+                    .bookId(books)
+                    .quantity(returnAndBorrowBooksResponse.getQuantity())
+                    .build();
+            returnAndBorrowBookService.save(returnAndBorrow);
+        }
 
-        ReturnAndBorrowBooks returnAndBorrow = ReturnAndBorrowBooks.builder()
-                .returnAt(new Date())
-                .borrowAt(new Date())
-                .reason("")
-                .status("LOADING")
-                .userId(users)
-                .bookId(books)
-                .build();
-        returnAndBorrowBookService.save(returnAndBorrow);
+
+//        returnAndBorrowBookService.save(returnAndBorrow);
         // Nếu không thuộc các trạng thái trên, trả về HttpStatus.CREATED
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

@@ -12,5 +12,5 @@ import java.util.Date;
 public class ReturnAndBorrowBooksResponse {
 
     private Long bookId;
-
+    private int quantity;
 }

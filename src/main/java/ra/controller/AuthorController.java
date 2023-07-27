@@ -67,7 +67,7 @@ public class AuthorController {
 
             CustomUserDetail customUserDetail = (CustomUserDetail) authentication.getPrincipal();
             String token = tokenProvider.createToken(customUserDetail);
-            JwtUserResponse response = new JwtUserResponse(customUserDetail.getUsername() ,customUserDetail.getPhoneNumber(), customUserDetail.getFullName(),token, customUserDetail.getListRoles());
+            JwtUserResponse response = new JwtUserResponse(customUserDetail.getUserId(), customUserDetail.getUsername() ,customUserDetail.getPhoneNumber(), customUserDetail.getFullName(),token, customUserDetail.getListRoles());
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
             // Xử lý khi tên người dùng hoặc mật khẩu không chính xác

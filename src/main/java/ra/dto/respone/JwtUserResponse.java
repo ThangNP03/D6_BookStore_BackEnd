@@ -12,6 +12,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @Data
 public class JwtUserResponse {
+    private Long userId;
     private String username;
     private String phoneNumber ;
     private String fullName ;
@@ -19,7 +20,8 @@ public class JwtUserResponse {
     private String type ="Bearer";
     private Collection<? extends GrantedAuthority> listRoles;
 
-    public JwtUserResponse(String ussername, String phoneNumber,String fullName, String token, Collection<? extends GrantedAuthority> listRoles) {
+    public JwtUserResponse(Long userId,String ussername, String phoneNumber,String fullName, String token, Collection<? extends GrantedAuthority> listRoles) {
+        this.userId = userId;
         this.username = ussername;
         this.phoneNumber = phoneNumber;
         this.fullName = fullName;

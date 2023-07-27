@@ -24,4 +24,5 @@ public class ReturnAndBorrowBooks {
     private Date returnAt;
     private String status;
    private String reason;
+   private int quantity;
 }
