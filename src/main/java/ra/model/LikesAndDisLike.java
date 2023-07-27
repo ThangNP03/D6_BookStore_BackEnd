@@ -1,9 +1,6 @@
 package ra.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ra.model.user.Users;
 
 import javax.persistence.*;
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @Table(name = "likesAndDisLike")
 public class LikesAndDisLike {
     @Id
@@ -23,6 +21,6 @@ public class LikesAndDisLike {
     @ManyToOne
     @JoinColumn(name = "bookId")
     private Books books;
-    private boolean status;
+    private boolean statusLike;
 
 }

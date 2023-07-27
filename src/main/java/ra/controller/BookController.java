@@ -56,6 +56,7 @@ public class BookController {
                 .translator(bookRespone.getTranslator())
                 .quantity(bookRespone.getQuantity())
                         .image(bookRespone.getImage())
+                        .status(bookRespone.isStatus())
                 .build();
         bookService.save(books);
         return ResponseEntity.ok(new ResponseMessage("Thêm mới thành công !!"));
@@ -75,6 +76,7 @@ public class BookController {
                 .translator(bookRespone.getTranslator())
                 .quantity(bookRespone.getQuantity())
                 .image(bookRespone.getImage())
+                .status(bookRespone.isStatus())
                 .build();
         bookService.save(books);
         return ResponseEntity.ok(new ResponseMessage("Chỉnh sửa thông sách thành công  !!"));

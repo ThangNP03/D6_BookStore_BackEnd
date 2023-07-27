@@ -1,9 +1,6 @@
 package ra.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ra.model.user.Users;
 
 import javax.persistence.*;
@@ -14,16 +11,17 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class ReturnAndBorrowBooks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Books book;
+    private Books bookId;
     @ManyToOne
-    private Users users;
+    private Users userId;
     private Date borrowAt;
     private Date returnAt;
-    private boolean status;
-
+    private String status;
+   private String reason;
 }

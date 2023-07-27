@@ -21,12 +21,11 @@ public class Books {
     private float depositFee;
     private String author;
     private String nxb;
-    private Long numberOfPage;
+    private int numberOfPage;
     @Column(name = "status", columnDefinition = "boolean default true")
     private boolean status;
     private String translator;
-    private Long likes ;
-    private Long disLike ;
-    private Long quantity;
+    private int likes;
+    private int quantity;
     private String image;
 }

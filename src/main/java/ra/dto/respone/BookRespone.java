@@ -16,8 +16,9 @@ public class BookRespone {
     private float depositFee;
     private String author;
     private String nxb;
-    private Long numberOfPage;
+    private Integer numberOfPage;
     private String translator;
-    private Long quantity;
+    private Integer quantity;
     private String image;
+    private boolean status;
 }

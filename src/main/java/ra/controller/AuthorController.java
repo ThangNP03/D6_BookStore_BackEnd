@@ -25,8 +25,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*")
+
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/bookStore/auth")
 public class AuthorController {
     @Autowired

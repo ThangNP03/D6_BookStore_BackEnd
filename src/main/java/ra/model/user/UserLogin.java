@@ -2,20 +2,19 @@ package ra.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import ra.model.ReturnAndBorrowBooks;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-@Table(name = "users")
-public class Users {
+public class UserLogin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userId")
@@ -41,13 +40,4 @@ public class Users {
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Roles> roles = new HashSet<>();
-
-    public Users(String username,String phoneNumber, String fullName, String passWord, Set<Roles> roles) {
-       this.username= username;
-        this.phoneNumber = phoneNumber;
-        this.passWord = passWord;
-        this.fullName = fullName;
-        this.roles = roles;
-    }
-
 }
