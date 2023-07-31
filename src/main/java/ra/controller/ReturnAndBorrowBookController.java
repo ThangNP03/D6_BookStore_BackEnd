@@ -61,11 +61,11 @@ public class ReturnAndBorrowBookController {
                 .build();
         for (int i = 0; i < list.size(); i++) {
             if (returnAndBorrow.getBookId() == list.get(i).getBookId() ) {
-
                 list.get(i).setQuantity(list.get(i).getQuantity() + 1)  ;
-//                returnAndBorrow.setQuantity(returnAndBorrow.getQuantity() -1);
+                if (list.get(i).getStatus() == "Borrowed"){
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
                 if (list.get(i).getQuantity() > books.getQuantity()) {
-
                     return new ResponseEntity<>(new ResponseMessage("postMessage"), HttpStatus.OK);
                 }
                 returnAndBorrowBookService.save(list.get(i));
@@ -117,9 +117,8 @@ public class ReturnAndBorrowBookController {
 
             orderResponse.getListId().forEach(
                 id -> {
-
                     ReturnAndBorrowBooks returnAndBorrowBooks = returnAndBorrowBookService.findById(id);
-                    returnAndBorrowBooks.setStatus("Chờ xác nhận");
+                    returnAndBorrowBooks.setStatus("Loading");
                     returnAndBorrowBookService.save(returnAndBorrowBooks);
                 }
         );
