@@ -2,7 +2,6 @@ package ra.dto.respone;
 
 import lombok.*;
 
-import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -10,7 +9,7 @@ import java.util.Date;
 @Setter
 @Builder
 public class ReturnAndBorrowBooksResponse {
-
     private Long bookId;
     private int quantity;
+//    private double price;
 }

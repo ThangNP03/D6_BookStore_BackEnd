@@ -23,6 +23,7 @@ public class ReturnAndBorrowBooks {
     private Date borrowAt;
     private Date returnAt;
     private String status;
-   private String reason;
-   private int quantity;
+    private String reason;
+    private int quantity;
+    private double price;
 }

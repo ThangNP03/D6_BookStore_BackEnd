@@ -42,5 +42,9 @@ public class ReturnAndBorrowBookService implements IReturnAndBorrowBooks {
         return returnAndBorrowBookRepository.findById(id).get();
     }
 
+    @Override
+    public void deleteByBookId(Long id) {
+        returnAndBorrowBookRepository.deleteByBookId(id);
+    }
 }
 

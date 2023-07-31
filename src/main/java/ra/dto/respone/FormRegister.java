@@ -13,5 +13,6 @@ public class FormRegister {
     private String phoneNumber;
     private String passWord;
     private String fullName ;
+    private  String address;
     private Set<String> roles;
 }

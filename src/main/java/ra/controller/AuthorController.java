@@ -102,7 +102,7 @@ public class AuthorController {
                 }
             });
         }
-        Users user = new Users(formRegister.getUsername(), formRegister.getPhoneNumber(), formRegister.getFullName(),passwordEncoder.encode(formRegister.getPassWord()), listRoles);
+        Users user = new Users(formRegister.getUsername(), formRegister.getPhoneNumber(), formRegister.getFullName(),passwordEncoder.encode(formRegister.getPassWord()),formRegister.getAddress(), listRoles);
         userService.save(user);
         return ResponseEntity.ok(new ResponseMessage("Register success"));
     }
