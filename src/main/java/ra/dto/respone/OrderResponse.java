@@ -11,4 +11,5 @@ import java.util.Set;
 @NoArgsConstructor
 public class OrderResponse {
     private Set<Long> listId;
+    private String status;
 }

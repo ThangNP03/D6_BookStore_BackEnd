@@ -26,13 +26,6 @@ public class BookController {
         List<Books> listBooks = bookService.findAll();
         return listBooks;
     }
-
-//    @GetMapping("/page")
-//    public ResponseEntity<Page<Books>> findAllBook(Pageable pageable) {
-//        Page<Books> listBooks = bookService.findAllBook(pageable);
-//        return new ResponseEntity<>(listBooks, HttpStatus.OK);
-//    }
-
     @GetMapping("/detallBook/{id}")
     public ResponseEntity<?> detallBookById(@PathVariable Long id){
         Optional<Books> detalls = bookService.getBooksById(id);

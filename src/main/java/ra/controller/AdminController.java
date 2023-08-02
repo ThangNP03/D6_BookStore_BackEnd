@@ -3,6 +3,7 @@ package ra.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ra.dto.respone.OrderResponse;
 import ra.model.ReturnAndBorrowBooks;
@@ -15,41 +16,20 @@ public class AdminController {
     @Autowired
     private ReturnAndBorrowBookService returnAndBorrowBookService;
 
-    @PutMapping("/borrowed")
-    public ResponseEntity<?> borrowed(@RequestBody OrderResponse orderResponse) {
-
-        orderResponse.getListId().forEach(
-                id -> {
-                    ReturnAndBorrowBooks returnAndBorrowBooks = returnAndBorrowBookService.findById(id);
-                    returnAndBorrowBooks.setStatus("Borrowed");
-                    returnAndBorrowBookService.save(returnAndBorrowBooks);
-                }
-        );
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-
+    @PatchMapping("/borrowed/{id}")
+    public ResponseEntity<?> borrowed(@PathVariable Long id) {
+        ReturnAndBorrowBooks returnAndBorrowBooks = returnAndBorrowBookService.findById(id);
+        returnAndBorrowBooks.setStatus("Borrowed");
+        returnAndBorrowBookService.save(returnAndBorrowBooks);
+        return ResponseEntity.ok("ok");
     }
-    @PutMapping("/returnBooks")
-    public ResponseEntity<?> returnBooks(@RequestBody OrderResponse orderResponse) {
 
-        orderResponse.getListId().forEach(
-                id -> {
-                    ReturnAndBorrowBooks returnAndBorrowBooks = returnAndBorrowBookService.findById(id);
-                    returnAndBorrowBooks.setStatus("Return");
-                    returnAndBorrowBookService.save(returnAndBorrowBooks);
-                }
-        );
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    @PatchMapping("/cancel/{id}")
+    public ResponseEntity<?> cancel(@PathVariable Long id) {
+        ReturnAndBorrowBooks returnAndBorrowBooks = returnAndBorrowBookService.findById(id);
+        returnAndBorrowBooks.setStatus("Cancel");
+        returnAndBorrowBookService.save(returnAndBorrowBooks);
+        return ResponseEntity.ok("ok");
     }
-    @PutMapping("/cancel")
-    public ResponseEntity<?> cancel(@RequestBody OrderResponse orderResponse) {
 
-        orderResponse.getListId().forEach(
-                id -> {
-                    ReturnAndBorrowBooks returnAndBorrowBooks = returnAndBorrowBookService.findById(id);
-                    returnAndBorrowBooks.setStatus("Cancel");
-                    returnAndBorrowBookService.save(returnAndBorrowBooks);
-                }
-        );
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
 }

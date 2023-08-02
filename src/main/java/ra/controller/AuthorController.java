@@ -1,6 +1,5 @@
 package ra.controller;
 
-import com.sun.tools.javac.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ra.dto.respone.*;
+import ra.model.ReturnAndBorrowBooks;
 import ra.model.user.RoleName;
 import ra.model.user.Roles;
 import ra.model.user.Users;
@@ -21,6 +21,7 @@ import ra.service.IMPL.RoleService;
 import ra.service.IMPL.UserService;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,11 +42,10 @@ public class AuthorController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
     @GetMapping("/getAll")
     public List<Users> getAll(){
-        List<Users> getAll = (List<Users>) userService.findAll();
-        return getAll;
+        List<Users> usersList = userService.findAll();
+        return usersList;
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateUser(@RequestBody UserResponse userResponse, @PathVariable Long id){
@@ -135,5 +135,10 @@ public class AuthorController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage("Đã xảy ra lỗi server."));
         }
 
+    }
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> findListCartByUserID(@PathVariable Long id) {
+        Users users = userService.findById(id);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

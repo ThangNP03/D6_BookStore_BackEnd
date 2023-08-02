@@ -125,4 +125,26 @@ public class ReturnAndBorrowBookController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @PatchMapping("/replay/{id}")
+    public ResponseEntity<?> cancel(@PathVariable Long id) {
+        ReturnAndBorrowBooks returnAndBorrowBooks = returnAndBorrowBookService.findById(id);
+        returnAndBorrowBooks.setStatus("Loading");
+        returnAndBorrowBookService.save(returnAndBorrowBooks);
+        return ResponseEntity.ok("ok");
+    }
+    @PatchMapping("/author-cancel/{id}")
+    public ResponseEntity<?> authorCancel(@PathVariable Long id) {
+        ReturnAndBorrowBooks returnAndBorrowBooks = returnAndBorrowBookService.findById(id);
+        returnAndBorrowBooks.setStatus("Cancel");
+        returnAndBorrowBookService.save(returnAndBorrowBooks);
+        return ResponseEntity.ok("ok");
+    }
+    @PatchMapping("/returnBooks/{id}")
+    public ResponseEntity<?> returnBooks(@PathVariable Long id) {
+        ReturnAndBorrowBooks returnAndBorrowBooks = returnAndBorrowBookService.findById(id);
+        returnAndBorrowBooks.setStatus("Return");
+        returnAndBorrowBookService.save(returnAndBorrowBooks);
+        return ResponseEntity.ok("ok");
+    }
+
 }
