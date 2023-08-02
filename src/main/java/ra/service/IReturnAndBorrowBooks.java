@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import ra.model.Books;
 import ra.model.ReturnAndBorrowBooks;
-import ra.model.user.Users;
+
 
 import javax.transaction.Transactional;
 import java.util.List;

@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ra.dto.respone.OrderResponse;
 import ra.model.ReturnAndBorrowBooks;
+import ra.model.user.Users;
 import ra.service.IMPL.ReturnAndBorrowBookService;
 
 @RestController
@@ -30,6 +31,18 @@ public class AdminController {
         returnAndBorrowBooks.setStatus("Cancel");
         returnAndBorrowBookService.save(returnAndBorrowBooks);
         return ResponseEntity.ok("ok");
+    }
+    @PatchMapping("/returnBook/{id}")
+    public ResponseEntity<?> returnBooks(@PathVariable Long id) {
+        ReturnAndBorrowBooks returnAndBorrowBooks = returnAndBorrowBookService.findById(id);
+        returnAndBorrowBooks.setStatus("Return");
+        returnAndBorrowBookService.save(returnAndBorrowBooks);
+        return ResponseEntity.ok("ok");
+    }
+    @GetMapping("/returnAndBorrowBooks/{id}")
+    public ResponseEntity<?> findListCartByUserID(@PathVariable Long id) {
+        ReturnAndBorrowBooks returnAndBorrowBooks = returnAndBorrowBookService.findById(id);
+        return new ResponseEntity<>(returnAndBorrowBooks, HttpStatus.OK);
     }
 
 }

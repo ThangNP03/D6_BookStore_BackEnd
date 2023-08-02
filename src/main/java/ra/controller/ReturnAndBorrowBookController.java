@@ -55,6 +55,7 @@ public class ReturnAndBorrowBookController {
                 .userId(users)
                 .returnAt(new Date())
                 .borrowAt(new Date())
+                .requestToPayAt(new Date())
                 .status("")
                 .reason("")
                 .quantity(returnAndBorrowBooksResponse.getQuantity())
@@ -88,6 +89,7 @@ public class ReturnAndBorrowBookController {
                 .userId(users)
                 .returnAt(new Date())
                 .borrowAt(new Date())
+                .requestToPayAt(new Date())
                 .status("")
                 .reason("")
                 .quantity(returnAndBorrowBooksResponse.getQuantity())
@@ -139,10 +141,10 @@ public class ReturnAndBorrowBookController {
         returnAndBorrowBookService.save(returnAndBorrowBooks);
         return ResponseEntity.ok("ok");
     }
-    @PatchMapping("/returnBooks/{id}")
+    @PatchMapping("/bookReturnRequest/{id}")
     public ResponseEntity<?> returnBooks(@PathVariable Long id) {
         ReturnAndBorrowBooks returnAndBorrowBooks = returnAndBorrowBookService.findById(id);
-        returnAndBorrowBooks.setStatus("Return");
+        returnAndBorrowBooks.setStatus("BookReturnRequest");
         returnAndBorrowBookService.save(returnAndBorrowBooks);
         return ResponseEntity.ok("ok");
     }

@@ -20,8 +20,12 @@ public class ReturnAndBorrowBooks {
     private Books bookId;
     @ManyToOne
     private Users userId;
+    @Temporal(TemporalType.DATE)
     private Date borrowAt;
+    @Temporal(TemporalType.DATE)
     private Date returnAt;
+    @Temporal(TemporalType.DATE)
+    private  Date requestToPayAt;
     private String status;
     private String reason;
     private int quantity;
