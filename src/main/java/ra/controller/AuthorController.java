@@ -51,15 +51,18 @@ public class AuthorController {
     public ResponseEntity<?> updateUser(@RequestBody UserResponse userResponse, @PathVariable Long id){
         Users users = userService.findById(id);
         users.setFullName(userResponse.getFullName());
+        users.setUsername(userResponse.getUsername());
         users.setPhoneNumber(userResponse.getPhoneNumber());
         users.setAvatar(userResponse.getAvatar());
         users.setAddress(userResponse.getAddress());
         userService.save(users);
-        return ResponseEntity.ok("Chỉnh sửa thông tin thành công!!!");
+        return ResponseEntity.ok(new ResponseMessage("Chỉnh sửa thông tin cá nhân thành công !!!"));
     }
     @PostMapping("/signIn")
     public ResponseEntity<?> login(@RequestBody FormLogin formLogin) {
+
         try {
+
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(formLogin.getUsername(), formLogin.getPassWord())
             );
@@ -67,8 +70,11 @@ public class AuthorController {
 
             CustomUserDetail customUserDetail = (CustomUserDetail) authentication.getPrincipal();
             String token = tokenProvider.createToken(customUserDetail);
-            JwtUserResponse response = new JwtUserResponse(customUserDetail.getUserId(), customUserDetail.getUsername() ,customUserDetail.getPhoneNumber(), customUserDetail.getFullName(),token, customUserDetail.getListRoles());
+            JwtUserResponse response = new JwtUserResponse(customUserDetail.getUserId(), customUserDetail.getUsername() ,customUserDetail.getPhoneNumber(), customUserDetail.getFullName(), customUserDetail.getAvatar(), token, customUserDetail.getListRoles());
             return ResponseEntity.ok(response);
+
+
+
         } catch (AuthenticationException e) {
             // Xử lý khi tên người dùng hoặc mật khẩu không chính xác
 
@@ -83,8 +89,6 @@ public class AuthorController {
         if(userService.existsByPhoneNumber(formRegister.getPhoneNumber())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Số điện thoại đã được đăng ký !!!");
         }
-
-
         Set<String> roles = formRegister.getRoles();
         Set<Roles> listRoles = new HashSet<>();
         if (roles== null||roles.isEmpty()){
@@ -103,6 +107,7 @@ public class AuthorController {
             });
         }
         Users user = new Users(formRegister.getUsername(), formRegister.getPhoneNumber(), formRegister.getFullName(),passwordEncoder.encode(formRegister.getPassWord()),formRegister.getAddress(), listRoles);
+        user.setStatus(true);
         userService.save(user);
         return ResponseEntity.ok(new ResponseMessage("Register success"));
     }

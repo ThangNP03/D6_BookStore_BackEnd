@@ -25,10 +25,11 @@ public class AdminController {
         return ResponseEntity.ok("ok");
     }
 
-    @PatchMapping("/cancel/{id}")
+    @PatchMapping("/cancelBorrow/{id}")
     public ResponseEntity<?> cancel(@PathVariable Long id) {
         ReturnAndBorrowBooks returnAndBorrowBooks = returnAndBorrowBookService.findById(id);
-        returnAndBorrowBooks.setStatus("Cancel");
+        returnAndBorrowBooks.setStatus("CancelBorrow");
+        returnAndBorrowBooks.setReason("Sách bạn muốn mượn hiện đã hết, vui lòng chọn cuốn khác !!!!");
         returnAndBorrowBookService.save(returnAndBorrowBooks);
         return ResponseEntity.ok("ok");
     }

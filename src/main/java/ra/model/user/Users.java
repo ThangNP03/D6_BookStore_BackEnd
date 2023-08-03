@@ -30,7 +30,7 @@ public class Users {
     private String passWord;
     @Column(name = "fullName")
     private String fullName ;
-    @Column(name = "status", columnDefinition = "boolean default true")
+    @Column(name = "status")
     private boolean status;
     @Column(name = "avatar")
     private String avatar;

@@ -29,7 +29,7 @@ public class CustomUserDetail implements UserDetails {
     private String passWord;
 
     private String fullName ;
-
+    private String avatar;
     private boolean status;
     Collection<? extends GrantedAuthority> listRoles;
 
@@ -51,6 +51,7 @@ public class CustomUserDetail implements UserDetails {
                 .fullName(user.getFullName())
                 .phoneNumber(user.getPhoneNumber())
                 .passWord(user.getPassWord())
+                .avatar(user.getAvatar())
                 .status(user.isStatus())
                 .listRoles(authorityList)
                 .build();
